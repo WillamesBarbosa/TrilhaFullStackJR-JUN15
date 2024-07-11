@@ -1,0 +1,6 @@
+# Arquivos Ignorados pelo git
+
+node_modules/
+package-lock.json
+ssl/
+.env
