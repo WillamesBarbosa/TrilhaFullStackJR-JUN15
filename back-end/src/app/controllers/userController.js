@@ -1,3 +1,4 @@
+const responsesHTTP = require('../../utils/responsesHTTP');
 const UserRepository = require('../repositories/userRepository');
 
 class UserController {
@@ -9,12 +10,16 @@ class UserController {
         email,
         password,
       } = request.body;
-      console.log(full_name, username, email, password);
+
       const user = await UserRepository.create(full_name, username, email, password);
+
       return response.status(201).json(user);
     } catch (error) {
       console.log(error);
-      return response.status(500);
+
+      return response
+        .status(responsesHTTP.INTERNAL_SERVER_ERROR.status)
+        .json(responsesHTTP.INTERNAL_SERVER_ERROR);
     }
   }
 }
