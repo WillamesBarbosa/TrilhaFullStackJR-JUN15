@@ -5,6 +5,7 @@ const cors = require('cors');
 
 const routes = require('./routes/routes');
 const database = require('./database/config');
+const generalErrors = require('./middlewares/generalErrors');
 
 const textInitialWhenConnect = `
 -----------------------------------------------
@@ -30,11 +31,8 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(routes);
 // Middleware so that errors can respond to the client in case of errors
-app.use((error, request, response, next) => {
-  console.log('## ERROR HANDLER ##');
-  console.log(error);
-  response.sendStatus(500);
-});
+app.use(generalErrors);
+
 // For read ssl certified
 const options = {
   key: fs.readFileSync('ssl/code.key'),
