@@ -4,6 +4,7 @@ const https = require('https');
 const cors = require('cors');
 
 const routes = require('./routes/routes');
+const database = require('./database/config');
 
 const textInitialWhenConnect = `
 -----------------------------------------------
@@ -34,7 +35,6 @@ app.use((error, request, response, next) => {
   console.log(error);
   response.sendStatus(500);
 });
-
 // For read ssl certified
 const options = {
   key: fs.readFileSync('ssl/code.key'),
@@ -48,4 +48,17 @@ const port = 3000;
 const server = https.createServer(options, app);
 
 // Calling the function to start the server.
-server.listen(port, () => console.log(textInitialWhenConnect));
+async function startServer() {
+  try {
+    // Attempts to synchronize with the database before starting the server
+    await database.sync();
+
+    // Starting the server
+    server.listen(port, () => console.log(textInitialWhenConnect));
+  } catch (error) {
+    console.log(error);
+    throw new Error('Houve um erro inesperado');
+  }
+}
+
+startServer();
