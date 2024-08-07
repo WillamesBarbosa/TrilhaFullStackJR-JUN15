@@ -8,6 +8,7 @@ const User = database.define('User', {
   id: {
     type: DataTypes.UUID,
     defaultValue: generateUUIDS,
+    allowNull: false,
     primaryKey: true,
   },
   full_name: {
