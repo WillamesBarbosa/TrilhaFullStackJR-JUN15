@@ -5,6 +5,7 @@ const cors = require('cors');
 
 const routes = require('./routes/routes');
 const database = require('./database/config');
+const { errorInJsonBody } = require('./middlewares/errorInJsonBody');
 const generalErrors = require('./middlewares/generalErrors');
 
 const textInitialWhenConnect = `
@@ -21,6 +22,9 @@ const textInitialWhenConnect = `
 const app = express();
 // For convert JSON on Js Object
 app.use(express.json());
+
+// Check if the json strutucture is correct
+app.use(errorInJsonBody);
 
 const corsOptions = {
   credentials: true,
