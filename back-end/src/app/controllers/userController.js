@@ -1,3 +1,5 @@
+const validator = require('validator');
+
 const responsesHTTP = require('../../utils/responsesHTTP');
 const UserRepository = require('../repositories/userRepository');
 
@@ -27,6 +29,10 @@ class UserController {
         email,
         password,
       } = request.body;
+
+      if (!validator.isEmail(email)) {
+        return response.status(responsesHTTP.BAD_REQUEST.status).json(responsesHTTP.BAD_REQUEST);
+      }
 
       const user = await UserRepository.create(full_name, username, email, password);
 
