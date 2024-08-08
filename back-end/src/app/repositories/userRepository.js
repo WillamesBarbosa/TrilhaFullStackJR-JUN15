@@ -13,6 +13,12 @@ class UserRepository {
     return !!row;
   }
 
+  async usernameAlreadyExiste(username) {
+    const row = await User.findOne(username);
+
+    return !!row;
+  }
+
   async create(full_name, username, email, password) {
     const row = await User.create(
       {
