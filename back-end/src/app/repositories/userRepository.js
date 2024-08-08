@@ -7,6 +7,12 @@ class UserRepository {
     return users;
   }
 
+  async emailAlreadyExiste(email) {
+    const row = await User.findOne(email);
+
+    return !!row;
+  }
+
   async create(full_name, username, email, password) {
     const row = await User.create(
       {
