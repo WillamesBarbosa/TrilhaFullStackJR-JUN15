@@ -30,6 +30,7 @@ class UserController {
         password,
       } = request.body;
 
+      // Verifies that the email format is valid
       if (!validator.isEmail(email)) {
         return response.status(responsesHTTP.BAD_REQUEST.status).json(responsesHTTP.BAD_REQUEST);
       }
