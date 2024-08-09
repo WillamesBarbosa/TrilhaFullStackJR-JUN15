@@ -35,12 +35,18 @@ class UserController {
         return response.status(responsesHTTP.BAD_REQUEST.status).json(responsesHTTP.BAD_REQUEST);
       }
 
+      // Checks if the email or username already exists in the database
+      const emailVerification = await UserRepository.emailAlreadyExist(email);
+      const usernameVerification = await UserRepository.usernameAlreadyExist(username);
+
+      if (emailVerification || usernameVerification) {
+        return response.status(responsesHTTP.CONFLICT.status).json(responsesHTTP.CONFLICT);
+      }
+
       const user = await UserRepository.create(full_name, username, email, password);
 
       return response.status(201).json(user);
     } catch (error) {
-      console.log(error);
-
       return response
         .status(responsesHTTP.INTERNAL_SERVER_ERROR.status)
         .json(responsesHTTP.INTERNAL_SERVER_ERROR);
