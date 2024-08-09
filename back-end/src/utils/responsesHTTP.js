@@ -31,6 +31,11 @@ const responsesHTTP = {
     error: 'Not Found',
     message: 'The requested resource could not be found.',
   },
+  CONFLICT: {
+    status: 409,
+    error: 'Conflict',
+    message: 'The request could not be completed due to a conflict with the current state of the resource.',
+  },
   INTERNAL_SERVER_ERROR: {
     status: 500,
     error: 'Internal Server Error',
