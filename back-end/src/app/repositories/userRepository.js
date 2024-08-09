@@ -7,14 +7,16 @@ class UserRepository {
     return users;
   }
 
-  async emailAlreadyExiste(email) {
-    const row = await User.findOne(email);
+  async emailAlreadyExist(email) {
+    // eslint-disable-next-line
+    const row = await User.findOne({ where: { email: email } });
 
     return !!row;
   }
 
-  async usernameAlreadyExiste(username) {
-    const row = await User.findOne(username);
+  async usernameAlreadyExist(username) {
+    // eslint-disable-next-line
+    const row = await User.findOne({ where: { username: username } });
 
     return !!row;
   }
